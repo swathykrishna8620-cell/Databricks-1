@@ -60,14 +60,17 @@ df.show()
 # DBTITLE 1,Concatenating values from multiple columns
 from pyspark.sql.functions import col, concat, lit
 
-df.select(?).show()
+df.select(col("id"),
+          "f_name",
+          "l_name",
+          concat(col("f_name"), lit(" "), col("l_name")).alias("full_name")).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,Changing Date Format
 from pyspark.sql.functions import date_format
 
-temp_df = df.select(?)
+temp_df = df.select(col('id'),date_format('customer_from','yyyyMMdd').alias('Date'))
 temp_df.show()
 
 # COMMAND ----------
@@ -78,25 +81,28 @@ temp_df.show()
 # COMMAND ----------
 
 # DBTITLE 1,Separating Date components
-customer_data = df.select(?)
+customer_data = df.select(col("id"),
+                    date_format('customer_from', 'yyyy').cast('int').alias('Year'),
+                    date_format('customer_from', 'MM').cast('int').alias('Month'),
+                    date_format('customer_from', 'dd').cast('int').alias('Day'))
 customer_data.show()
 
 # COMMAND ----------
 
 # DBTITLE 1,Manipulation on Numeric column
-?
+df.select(col('amount_paid'),(col('amount_paid')+25).alias('amount paind_increament')).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,withColumn() example
-df.select('id', 'f_name', 'l_name').?
+df.select('id', 'f_name', 'l_name').withColumn('full_name', concat(col('f_name'), lit(' '), col('l_name'))).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,withColumnRenamed() Example 1
 #renaming a single column
 
-df.select('id', 'f_name', 'l_name').?
+df.select('id', 'f_name', 'l_name').withColumnRenamed('id', 'user_id').show()
 
 # COMMAND ----------
 
@@ -104,14 +110,21 @@ df.select('id', 'f_name', 'l_name').?
 # renaming multiple columns
 
 (
-    ?
+    df.select('id', 'f_name', 'l_name')
+    .withColumnRenamed('id', 'user_id')
+    .withColumnRenamed('f_name', 'first_name')
+    .withColumnRenamed('l_name', 'last_name')
     .show()
 )
 
 # COMMAND ----------
 
 # DBTITLE 1,Renaming the columns and expressions using alias
-df.select(?).show()
+df.select(
+    col('id').alias('user_id'),
+    col('f_name').alias('first_name'),
+    col('l_name').alias('last_name')
+).show()
 
 # COMMAND ----------
 
@@ -122,7 +135,7 @@ df.printSchema()
 # DBTITLE 1,Applying size on Arraytype
 from pyspark.sql.functions import size
 
-df.select('id', 'courses').?).show()
+df.select('id', 'courses').withColumn('course_count', size('courses')).show()
 
 # COMMAND ----------
 
@@ -148,14 +161,19 @@ from pyspark.sql import functions as F
 # no error but doesn't work
 # understanding role of col
 
-emp_df.?.show()
+#emp_df.withColumn('bonus','salary'*F.lit(0.2)).show()
+'''
+[CAST_INVALID_INPUT] The value 'salary' of the type "STRING" cannot be cast to "DOUBLE" because it is malformed. Correct the value as per the syntax, or change its target type. Use `try_cast` to tolerate malformed input and return NULL instead.
+'''
+
+emp_df.withColumn('bonus',F.col('salary')*F.lit(0.2)).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,20% Hike in Salary: Correct way
 # this will work
 
-emp_df.?.show()
+emp_df.withColumn('Bonus',F.col("salary")*F.lit(0.20)).show()
 
 # COMMAND ----------
 
@@ -169,7 +187,7 @@ emp_df.?.show()
 # mentioned column name in withColumn is same as original column name
 # it will overright orignal column in the dataframe
 
-emp_df.?.show()
+emp_df.withColumn('nationality',F.lower('nationality')).show()
 
 # COMMAND ----------
 
@@ -177,34 +195,34 @@ emp_df.?.show()
 # using upper() function
 # creating new column
 
-emp_df.?.show()
+emp_df.withColumn('Updated_nationality',F.upper('nationality')).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,Initcap
-emp_df.?.show()
+emp_df.withColumn('nationality',F.initcap('nationality')).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,Length
-emp_df.?.show()
+emp_df.withColumn('len',F.length('nationality')).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,Substring
-emp_df.?.show()
+emp_df.withColumn('short_name',F.substring('f_name',1,4)).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,Split
-emp_df.?.show()
+emp_df.withColumn('ssn_components',F.split('ssn',' ')).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,What are the components?
 # split results in Array type column
 
-emp_df.?.printSchema()
+emp_df.withColumn('ssn_components',F.split('ssn',' ')).printSchema()
 
 # COMMAND ----------
 
@@ -222,54 +240,73 @@ emp_df.?.printSchema()
 # DBTITLE 1,Get started
 # creating dummy dataframe
 l = [('X', )]
-df = spark.createDataFrame(l).toDF('dummy')
+df = spark.createDataFrame(l).toDF('dummy')    #like using dual table in sql
 
 # get current date
-print(?).show(truncate=False)) # default/standard format #yyyy-MM-dd
+df.select(F.current_date()).show(truncate=False) # default/standard format #yyyy-MM-dd
 
 # get current date and time
-print(?).show(truncate=False)) # default/standard format #yyyy-MM-dd HH:mm:ss.SSS
+df.select(F.current_timestamp()).show(truncate=False) # default/standard format #yyyy-MM-dd HH:mm:ss.SSS
 
 # COMMAND ----------
 
 # DBTITLE 1,Getting components of the date object
-df.select().show()
+df.select(
+    F.current_date().alias('current_date'),
+    F.year(F.current_date()).alias('year'),
+    F.month(F.current_date()).alias('month'),
+    F.weekofyear(F.current_date()).alias('week'),
+    F.dayofyear(F.current_date()).alias('dayofyear'),
+    F.dayofmonth(F.current_date().alias('dayofyear')),
+    F.dayofweek(F.current_date()).alias('dayofweek')
+).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,Getting components of the timestamp object
-df.select().show(truncate=False)
+df.select(
+    F.current_timestamp().alias('current_date'),
+    F.year(F.current_timestamp()).alias('year'),
+    F.month(F.current_timestamp()).alias('month'),
+    F.weekofyear(F.current_timestamp()).alias('week'),
+    F.dayofyear(F.current_timestamp()).alias('dayofyear'),
+    F.dayofmonth(F.current_timestamp().alias('dayofyear')),
+    F.dayofweek(F.current_timestamp()).alias('dayofweek'),
+    F.hour(F.current_timestamp()).alias('hour'),
+    F.minute(F.current_timestamp()).alias('minute'),
+    F.second(F.current_timestamp()).alias('second')
+).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,to_date() Example 1
 # converting string into date
 
-df.select(?).show()
+df.select(F.to_date(F.lit('20210302'),'yyyyMMdd').alias('To_Date')).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,to_date() Example 2
 # to_date
 
-df.select(?).show() # julian day / three digit day of the year
+df.select(F.to_date(F.lit('2025101'),'yyyyDDD').alias('To_Date')).show() # julian day / three digit day of the year
 
 # COMMAND ----------
 
 # DBTITLE 1,to_date() Example 3
 # to_date
 
-df.select(?).show()
+df.select(F.to_date(F.lit('2025/10/01'),'yyyy/MM/dd').alias('To_Date')).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,to_timestamp() Example 1
-df.select(?).show()
+df.select(F.to_timestamp(F.lit('2025-10-01'),'yyyy-MM-dd').alias('To_Date')).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,to_timestamp() Example 2
-df.select(?).show()
+df.select(F.to_timestamp(F.lit('2025-Mar-01 17:30:27'),'yyyy-MMM-dd HH:mm:ss').alias('To_Date')).show()
 
 # COMMAND ----------
 
@@ -312,12 +349,16 @@ dt_tm_df. \
     withColumn('date_sub_time', F.date_sub('time', 10)). \
 show(truncate=False)
 
+df.printSchema()
+
 # COMMAND ----------
 
 # DBTITLE 1,datediff(end, start)
 # gives diff between 2 given dates in days
 
-dt_tm_df.?.show()
+dt_tm_df.\
+    withColumn('date_diff_date',F.datediff(F.current_date(), 'date')).\
+    withColumn('date_diff_time',F.datediff(F.current_timestamp(), 'time')).show()
 
 # COMMAND ----------
 
@@ -348,11 +389,24 @@ emp_df.show()
 # DBTITLE 1,coalesce() Example 1
 # creating new column by replacing null with 0 (empty string ('') is not getting replaced)
 
-emp_df.?.show()
+emp_df_clean.withColumn('bonus1',F.coalesce('bonus',F.lit(0))).show()
+
+# COMMAND ----------
+
+emp_df_clean = emp_df.withColumn(
+    'bonus_c',
+    F.when(F.col('bonus') == '',None).otherwise(F.col('bonus'))
+)
+
+emp_df_clean.withColumn(
+    'bonus1',
+    F.coalesce(F.col('bonus_c').cast('int'),F.lit(0))
+).show()
 
 # COMMAND ----------
 
 # DBTITLE 1,coalesce() Example 2
+
 # changing datatype makes the empty string as null (empty string as no equivalent int so gets converted to null), then apply coalesce
 
 emp_df.?.show()
@@ -362,7 +416,7 @@ emp_df.?.show()
 # DBTITLE 1,Putting all together
 # calculate payment
 
-emp_df.?.show()
+emp_df.withColumn('bonus',F.expr("nvl(bonus,0)")).show()
 
 # COMMAND ----------
 
@@ -370,7 +424,7 @@ emp_df.?.show()
 # with expr (sql expression)
 # nvl is not direct function in pyspark.Functions
 
-emp_df.?.show()
+emp_df.withColumn('bonus',F.expr("nvl(nullif(bonus,''), 0)")).show()
    
 # emp_df.withColumn('bonus', F.nvl(bonus, 0)).show()  -- this gives error
 
