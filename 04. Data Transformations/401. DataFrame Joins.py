@@ -35,7 +35,7 @@ help(?)
 # inner join: select/pick only matching record, discard if no matches found
 # join returns a new df
 
-df = ?
+df = productDf.join(other=brandDf, on=productDf.brand_id == brandDf.brand_id, how="inner")
 df.printSchema()
 df.show()
 
@@ -51,7 +51,7 @@ from pyspark.sql.functions import col
 # drop(brandDf["brand_id"]) drop column from brandDf
 # drop(productDf.brand_id) drop column from productDf
 
-df = (?)
+df = (productDf.join(brandDf, productDf["brand_id"] == brandDf["brand_id"], "inner")).drop(brandDf["brand_id"])
 
 df.printSchema()
 df.show()
@@ -59,11 +59,16 @@ df.show()
 
 # COMMAND ----------
 
+df = productDf.join(other=brandDf, on='brand_id', how="inner")
+df.show()    #Same column name
+
+# COMMAND ----------
+
 # DBTITLE 1,Full Outer Join
 # Outer Join, Full Outer Outer, [Left outer + Right outer]
 # pick all records from left dataframe, and also right dataframe
 # if no matches found, it fills null data for not matched records
-productDf.?.show()
+productDf.join(brandDf, productDf["brand_id"] == brandDf["brand_id"], "outer").show()
 
 
 # COMMAND ----------
@@ -71,14 +76,14 @@ productDf.?.show()
 # DBTITLE 1,Left Outer join
 # Left, Left Outer join 
 # picks all records from left, if no matches found, it fills null for right data
-productDf.?.show()
+productDf.join(brandDf, productDf["brand_id"] == brandDf["brand_id"], "leftouter").show()
 
 # COMMAND ----------
 
 # DBTITLE 1,Right Outer Join
 # Right, Right outer Join
 # picks all the records from right, if no matches found, fills left data with null
-productDf.?.show()
+productDf.join(brandDf, productDf["brand_id"] == brandDf["brand_id"], "rightouter").show()
 
 
 # COMMAND ----------
@@ -90,8 +95,8 @@ productDf.?.show()
 # it is similar to innerjoin, but picks/projects records only from left
 # we can't see brand_id, brand_name from brands df
 # result will not include not matching data [similar to inner join]
-
-productDf.?.show()
+# inner join minus the columns of left table
+productDf.join(brandDf, productDf["brand_id"] == brandDf["brand_id"], "leftsemi").show()
 
 # COMMAND ----------
 
@@ -107,14 +112,14 @@ productDf.join(brandDf, productDf["brand_id"] ==  brandDf["brand_id"], "rightsem
 # Exact opposite to semi join
 # Picks the records that doesn't have match on the right side
 
-productDf.?.show()
+productDf.join(brandDf, productDf["brand_id"] == brandDf["brand_id"], "leftanti").show()
 
 # COMMAND ----------
 
 # DBTITLE 1,Left Anti join by swaping left and right tables
 # as right anti join is not available, we can get the result for the same by swapping dataframes.
 
-brandDf.?.show()
+brandDf.join(productDf, productDf["brand_id"] == brandDf["brand_id"], "leftanti").show()
 
 # COMMAND ----------
 
@@ -136,8 +141,9 @@ storeDf.show()
 
 # DBTITLE 1,Cross Join
 # cartesian product, take row from left side, pair with all from right side
-
-productDf.?.show()
+df = productDf.join(storeDf, how='cross')
+df.show()
+#productDf.crossJoin(storeDf).show()
 
 # COMMAND ----------
 

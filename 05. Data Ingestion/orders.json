@@ -1,0 +1,20 @@
+{"Order_ID":3,"Order_Date":"10/13/2010","Order_Quantity":6,"Sales":261.54,"Discount":0.04,"Profit":-213.25,"Unit_Price":38.94,"Customer_Name":"Muhammed MacIntyre","Product_Category":"Category-1"}
+{"Order_ID":6,"Order_Date":"10/13/2010","Order_Quantity":2,"Sales":6.93,"Discount":0.01,"Profit":-4.64,"Unit_Price":2.08,"Customer_Name":"Ruben Dartt","Product_Category":"Category-4"}
+{"Order_ID":32,"Order_Date":"10/13/2010","Order_Quantity":15,"Sales":140.56,"Discount":0.04,"Profit":-128.38,"Unit_Price":8.46,"Customer_Name":"Liz Pelletier","Product_Category":"Category-3"}
+{"Order_ID":32,"Order_Date":"10/13/2010","Order_Quantity":26,"Sales":2808.08,"Discount":0.07,"Profit":1054.82,"Unit_Price":107.53,"Customer_Name":"Liz Pelletier","Product_Category":"Category-4"}
+{"Order_ID":32,"Order_Date":"10/13/2010","Order_Quantity":24,"Sales":1761.4,"Discount":0.09,"Profit":-1748.56,"Unit_Price":70.89,"Customer_Name":"Liz Pelletier","Product_Category":"Category-4"}
+{"Order_ID":32,"Order_Date":"10/14/2010","Order_Quantity":23,"Sales":160.2335,"Discount":0.04,"Profit":-85.13,"Unit_Price":7.99,"Customer_Name":"Liz Pelletier","Product_Category":"Category-4"}
+{"Order_ID":35,"Order_Date":"10/14/2010","Order_Quantity":30,"Sales":288.56,"Discount":0.03,"Profit":60.72,"Unit_Price":9.11,"Customer_Name":"Julie Creighton","Product_Category":"Category-1"}
+{"Order_ID":35,"Order_Date":"10/14/2010","Order_Quantity":14,"Sales":1892.848,"Discount":0.01,"Profit":48.99,"Unit_Price":155.99,"Customer_Name":"Julie Creighton","Product_Category":"Category-1"}
+{"Order_ID":36,"Order_Date":"10/14/2010","Order_Quantity":46,"Sales":2484.7455,"Discount":0.1,"Profit":657.48,"Unit_Price":65.99,"Customer_Name":"Sample Company A","Product_Category":"Category-4"}
+{"Order_ID":65,"Order_Date":"10/14/2010","Order_Quantity":32,"Sales":3812.73,"Discount":0.02,"Profit":1470.3,"Unit_Price":115.79,"Customer_Name":"Tamara Dahlen","Product_Category":"Category-1"}
+{"Order_ID":66,"Order_Date":"10/15/2010","Order_Quantity":41,"Sales":108.15,"Discount":0.09,"Profit":7.57,"Unit_Price":2.88,"Customer_Name":"Arthur Gainer","Product_Category":"Category-4"}
+{"Order_ID":69,"Order_Date":"10/15/2010","Order_Quantity":42,"Sales":1186.06,"Discount":0.09,"Profit":511.69,"Unit_Price":30.93,"Customer_Name":"Jonathan Doherty","Product_Category":"Category-3"}
+{"Order_ID":69,"Order_Date":"10/15/2010","Order_Quantity":28,"Sales":51.53,"Discount":0.03,"Profit":0.35,"Unit_Price":1.68,"Customer_Name":"Jonathan Doherty","Product_Category":"Category-3"}
+{"Order_ID":70,"Order_Date":"10/15/2010","Order_Quantity":48,"Sales":90.05,"Discount":0.03,"Profit":-107.0,"Unit_Price":1.86,"Customer_Name":"Helen Wasserman","Product_Category":"Category-2"}
+{"Order_ID":70,"Order_Date":"10/15/2010","Order_Quantity":46,"Sales":7804.53,"Discount":0.05,"Profit":2057.17,"Unit_Price":205.99,"Customer_Name":"Helen Wasserman","Product_Category":"Category-2"}
+{"Order_ID":96,"Order_Date":"10/16/2010","Order_Quantity":37,"Sales":4158.1235,"Discount":0.01,"Profit":1228.89,"Unit_Price":125.99,"Customer_Name":"Keith Dawkins","Product_Category":"Category-3"}
+{"Order_ID":97,"Order_Date":"10/16/2010","Order_Quantity":26,"Sales":75.57,"Discount":0.03,"Profit":28.24,"Unit_Price":2.89,"Customer_Name":"Craig Yedwab","Product_Category":"Category-4"}
+{"Order_ID":129,"Order_Date":"10/16/2010","Order_Quantity":4,"Sales":32.72,"Discount":0.09,"Profit":-22.59,"Unit_Price":6.48,"Customer_Name":"Pauline Chand","Product_Category":"Category-1"}
+{"Order_ID":130,"Order_Date":"10/16/2010","Order_Quantity":3,"Sales":461.89,"Discount":0.05,"Profit":-309.82,"Unit_Price":150.98,"Customer_Name":"Roy Collins","Product_Category":"Category-3"}
+{"Order_ID":130,"Order_Date":"10/16/2010","Order_Quantity":29,"Sales":575.11,"Discount":0.02,"Profit":71.75,"Unit_Price":18.97,"Customer_Name":"Roy Collins","Product_Category":"Category-3"}

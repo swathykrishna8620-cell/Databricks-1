@@ -5,7 +5,7 @@
 -- COMMAND ----------
 
 -- DBTITLE 1,Creating Base Table for Views
-CREATE or REPLACE TABLE sales(s_id INT, 
+CREATE or REPLACE TABLE swathy_catalog.swathy_schema.sales(s_id INT, 
                     product_id STRING, 
                     product_category STRING,
                     emp_id INT,
@@ -25,13 +25,47 @@ INSERT INTO sales VALUES(1, 'P100', 'office', 101, 1001, 10000),
 
 -- COMMAND ----------
 
+select current_catalog();
+--select current_schema();
+
+-- COMMAND ----------
+
 -- DBTITLE 1,See data in table
-?
+select * from sales;
+
+-- COMMAND ----------
+
+create or replace view electronic_products
+as
+select * from sales where product_category = 'electronics';
+
+-- COMMAND ----------
+
+select * from electronic_products;
+
+-- COMMAND ----------
+
+create catalog if not exists swathy_catalog;
+use catalog swathy_catalog;
+
+select current_catalog();
+
+create schema if not exists swathy_catalog.swathy_schema;
+use schema swathy_schema;
+select current_schema();
+
+-- COMMAND ----------
+
+show tables;
 
 -- COMMAND ----------
 
 -- DBTITLE 1,See the list of Tables and Views
-?
+create or replace temporary view office
+as
+select * from sales where product_category = 'office';
+
+show tables;
 
 -- COMMAND ----------
 
@@ -41,27 +75,28 @@ INSERT INTO sales VALUES(1, 'P100', 'office', 101, 1001, 10000),
 -- COMMAND ----------
 
 -- DBTITLE 1,See table list
-?
+
 
 -- COMMAND ----------
 
 -- DBTITLE 1,Creating temp view
-?
+
 
 -- COMMAND ----------
 
 -- DBTITLE 1,See Tables
-?
+
 
 -- COMMAND ----------
 
 -- DBTITLE 1,Error: We will see this in unity catalog
 -- Materialized views can be created only with the Unity catalog enabled workspace
-
+/*what is materialized views?
+*/
 CREATE OR REPLACE MATERIALIZED VIEW sales_summary
 AS
 SELECT product_category, sum(amount) as TOTAL_SALES, avg(amount) as AVG_SALES
-    FROM sales
+    FROM swathy_catalog.swathy_schema.sales
     GROUP BY product_category;
 
 -- COMMAND ----------
@@ -98,15 +133,21 @@ SELECT product_category, sum(amount) as TOTAL_SALES, avg(amount) as AVG_SALES
 -- MAGIC %python
 -- MAGIC # temp table or temp view created within spark session
 -- MAGIC # create temp table out of data frame, which can be used in spark sql
--- MAGIC ?
+-- MAGIC salesDF.createOrReplaceTempView("salesview")
 
 -- COMMAND ----------
 
-?
+describe salesview;
 
 -- COMMAND ----------
 
-?
+-- MAGIC %python
+-- MAGIC electronics_salesDF = salesDF.filter(salesDF.product_category == 'electronics')
+-- MAGIC display(electronics_salesDF)
+
+-- COMMAND ----------
+
+SELECT * FROM salesview WHERE product_category = 'electronics';
 
 -- COMMAND ----------
 

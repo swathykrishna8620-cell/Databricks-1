@@ -12,6 +12,11 @@ DROP TABLE IF EXISTS brands;
 
 -- COMMAND ----------
 
+create table products(product_id int, product_name string, brand_id int);
+create table brands(brand_id int, brand_name string)
+
+-- COMMAND ----------
+
 -- DBTITLE 1,See Available Databases
 -- MAGIC %python
 -- MAGIC
@@ -86,42 +91,57 @@ INSERT INTO brands VALUES (100, "Apple"),
 -- COMMAND ----------
 
 -- DBTITLE 1,Inner join in SQL
-?
+select products.*, brands.*
+from products inner join brands
+on products.brand_id = brands.brand_id;
 
 -- COMMAND ----------
 
 -- DBTITLE 1,Inner join is Default Join
-?
+select products.*, brands.*
+from products join brands
+on products.brand_id = brands.brand_id;
 
 -- COMMAND ----------
 
 -- DBTITLE 1,Full Outer Join
-?
+select products.*, brands.*
+from products full outer join brands
+on products.brand_id = brands.brand_id;
 
 -- COMMAND ----------
 
 -- DBTITLE 1,Left Outer join
-?
+select products.*, brands.*
+from products left outer join brands
+on products.brand_id = brands.brand_id;
 
 -- COMMAND ----------
 
 -- DBTITLE 1,Right outer join
-?
+select products.*, brands.*
+from products right outer join brands
+on products.brand_id = brands.brand_id;
 
 -- COMMAND ----------
 
 -- DBTITLE 1,Left Semi Join
-?
+select products.* --, brands.*
+from products left semi join brands
+on products.brand_id = brands.brand_id;
 
 -- COMMAND ----------
 
 -- DBTITLE 1,Left Anti Join
-?
+select products.* --, brands.*
+from products left anti join brands
+on products.brand_id = brands.brand_id;
 
 -- COMMAND ----------
 
 -- DBTITLE 1,Cross join
-?
+select products.*
+from products cross join products
 
 -- COMMAND ----------
 

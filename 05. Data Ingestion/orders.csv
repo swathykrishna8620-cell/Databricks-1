@@ -1,0 +1,21 @@
+Order_ID,Order_Date,Order_Quantity,Sales,Discount,Profit,Unit_Price,Customer_Name,Product_Category
+3,10/13/2010,6,261.54,0.04,-213.25,38.94,Muhammed MacIntyre,Category-1
+6,10/13/2010,2,6.93,0.01,-4.64,2.08,Ruben Dartt,Category-4
+32,10/13/2010,15,140.56,0.04,-128.38,8.46,Liz Pelletier,Category-3
+32,10/13/2010,26,2808.08,0.07,1054.82,107.53,Liz Pelletier,Category-4
+32,10/13/2010,24,1761.4,0.09,-1748.56,70.89,Liz Pelletier,Category-4
+32,10/14/2010,23,160.2335,0.04,-85.13,7.99,Liz Pelletier,Category-4
+35,10/14/2010,30,288.56,0.03,60.72,9.11,Julie Creighton,Category-1
+35,10/14/2010,14,1892.848,0.01,48.99,155.99,Julie Creighton,Category-1
+36,10/14/2010,46,2484.7455,0.1,657.48,65.99,Sample Company A,Category-4
+65,10/14/2010,32,3812.73,0.02,1470.3,115.79,Tamara Dahlen,Category-1
+66,10/15/2010,41,108.15,0.09,7.57,2.88,Arthur Gainer,Category-4
+69,10/15/2010,42,1186.06,0.09,511.69,30.93,Jonathan Doherty,Category-3
+69,10/15/2010,28,51.53,0.03,0.35,1.68,Jonathan Doherty,Category-3
+70,10/15/2010,48,90.05,0.03,-107,1.86,Helen Wasserman,Category-2
+70,10/15/2010,46,7804.53,0.05,2057.17,205.99,Helen Wasserman,Category-2
+96,10/16/2010,37,4158.1235,0.01,1228.89,125.99,Keith Dawkins,Category-3
+97,10/16/2010,26,75.57,0.03,28.24,2.89,Craig Yedwab,Category-4
+129,10/16/2010,4,32.72,0.09,-22.59,6.48,Pauline Chand,Category-1
+130,10/16/2010,3,461.89,0.05,-309.82,150.98,Roy Collins,Category-3
+130,10/16/2010,29,575.11,0.02,71.75,18.97,Roy Collins,Category-3
